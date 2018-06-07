@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: istio-service-2
+  spec:
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: istio-service-2
+          version: v1
+      spec:
+        containers:
+          - name: istio-service-2
+            image: akalinovski/istio-service-2
+            ports:
+              - containerPort: 8080
+                name: http
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: istio-service-2
+    labels:
+      app: istio-service-2
+  spec:
+    ports:
+      - port: 8080
+        targetPort: 8080
+        name: http
+    selector:
+      app: istio-service-2
+
+

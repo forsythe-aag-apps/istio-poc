@@ -1,0 +1,65 @@
+# Configuration for a metric measuring bytes sent from a server
+# to a client
+apiVersion: "config.istio.io/v1alpha2"
+kind: metric
+metadata:
+  name: kafkasendbytes
+  namespace: istio-system
+spec:
+  value: connection.sent.bytes | 0 # uses a TCP-specific attribute
+  dimensions:
+    source_service: source.service | "unknown"
+    source_version: source.labels["version"] | "unknown"
+    destination_version: destination.labels["version"] | "unknown"
+  monitoredResourceType: '"UNSPECIFIED"'
+---
+# Configuration for a metric measuring bytes sent from a client
+# to a server
+apiVersion: "config.istio.io/v1alpha2"
+kind: metric
+metadata:
+  name: kafkareceivedbytes
+  namespace: istio-system
+spec:
+  value: connection.received.bytes | 0 # uses a TCP-specific attribute
+  dimensions:
+    source_service: source.service | "unknown"
+    source_version: source.labels["version"] | "unknown"
+    destination_version: destination.labels["version"] | "unknown"
+  monitoredResourceType: '"UNSPECIFIED"'
+---
+# Configuration for a Prometheus handler
+apiVersion: "config.istio.io/v1alpha2"
+kind: prometheus
+metadata:
+  name: kafkahandler
+  namespace: istio-system
+spec:
+  metrics:
+  - name: kafka_sent_bytes # Prometheus metric name
+    instance_name: kafkasendbytes.metric.default # Mixer instance name (fully-qualified)
+    kind: COUNTER
+    label_names:
+    - source_service
+    - source_version
+    - destination_version
+  - name: kafka_received_bytes # Prometheus metric name
+    instance_name: kafkareceivedbytes.metric.default # Mixer instance name (fully-qualified)
+    kind: COUNTER
+    label_names:
+    - source_service
+    - source_version
+    - destination_version
+---
+# Rule to send metric instances to a Prometheus handler
+apiVersion: "config.istio.io/v1alpha2"
+kind: rule
+metadata:
+  name: kafkaprom
+  namespace: istio-system
+spec:
+  actions:
+  - handler: kafkahandler.prometheus
+    instances:
+    - kafkareceivedbytes.metric
+    - kafkasentbytes.metric

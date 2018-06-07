@@ -1,0 +1,1 @@
+include 'istio-service-1', 'istio-service-2'
