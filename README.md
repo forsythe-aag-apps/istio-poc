@@ -1,6 +1,8 @@
 # istio-poc
 Istio PoC
 
+![How Istio Works](https://developer.ibm.com/courses/wp-content/uploads/sites/83/istiohowitworks.png)
+
 This repository contains PoC for testing Istio with different scenarios. 
 It contains two microservices - Istio Service 1 and Istio Service 2.
 
