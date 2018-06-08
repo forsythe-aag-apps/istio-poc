@@ -64,6 +64,13 @@ The same relates to the simple scenario (without Istio):
 sh ./run-simple-load.sh > simple-load.txt
 ```
 
-Now you can check and compare the statistics with Istio and without it for bot REST and Kafka event-base approaches. 
+Now you can check and compare the statistics with Istio and without it for bot REST and Kafka event-base approaches:
+
+| Communication Type | With Istio | Min Time (s) | Avg Time (s) | Max Time (s) |
+|--------------------|------------|--------------|--------------|--------------|
+| REST               | No         | 0.000587866  | 0.023438981  | 0.247927439  |
+| Kafka              | No         | 0.014516621  | 0.13176966   | 0.548365149  |
+| REST               | Yes        | 0.004040379  | 0.13176966   | 1.456135156  |
+| Kafka              | Yes        | 0.021058695  | 0.19700191   | 0.579825844  |
 
 
