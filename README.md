@@ -68,11 +68,21 @@ sh ./run-simple-load.sh > simple-load.txt
 
 Now you can check and compare the statistics with Istio and without it for bot REST and Kafka event-base approaches:
 
+With Mutual TLS enabled:
+
 | Communication Type | With Istio | Min Time (s) | Avg Time (s) | Max Time (s) |
 |--------------------|------------|--------------|--------------|--------------|
-| REST               | No         | 0.000587866  | 0.023438981  | 0.247927439  |
-| Kafka              | No         | 0.014516621  | 0.13176966   | 0.548365149  |
-| REST               | Yes        | 0.004040379  | 0.13176966   | 1.456135156  |
-| Kafka              | Yes        | 0.021058695  | 0.19700191   | 0.579825844  |
+| REST               | No         | 0.000587866  | 0.02343898   | 0.247927439  |
+| Kafka              | No         | 0.002663397  | 0.01281356   | 0.059068705  |
+| REST               | Yes        | 0.002571437  | 0.03938676   | 0.274686524  |
+| Kafka              | Yes        | 0.005560883  | 0.03105669   | 0.149545756  |
 
 
+Without Mutual TLS:
+
+| Communication Type | With Istio | Min Time (s) | Avg Time (s) | Max Time (s) |
+|--------------------|------------|--------------|--------------|--------------|
+| REST               | No         | 0.000837546  | 0.01684115   | 0.218721271  |
+| Kafka              | No         | 0.001674197  | 0.01169897   | 0.052319666  |
+| REST               | Yes        | 0.003439203  | 0.04537452   | 0.241416665  |
+| Kafka              | Yes        | 0.004982681  | 0.03279849   | 0.083777827  |
